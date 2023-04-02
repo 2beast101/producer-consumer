@@ -9,6 +9,7 @@ Compiling the program: clang++ -pthread producer-consumer.cpp -o producer-consum
 Running the program: ./producer-consumer
 
 Output: ./producer-consumer
+
 Produced: 83 at index: 0
 Consumed: 83 at index: 1
 Produced: 86 at index: 0
