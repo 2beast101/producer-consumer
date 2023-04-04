@@ -6,51 +6,35 @@
 #include <unistd.h>
 #include <string.h>
 #include <time.h>
+#include <sys/shm.h>
 
-int buffer[2];
+const int KEY = 9999;
+
+// int buffer[2];
 int count = 0;
 
 const int THREAD_NUM = 2;
 pthread_mutex_t mutexBuffer;
 sem_t semEmpty, semFull;
 
+struct bufferSegment {
+	int buffer[2];
+	int index = 0;
+};
+
+bufferSegment *sharedBuff;
 
 
 void* producer(void* args) {
+
 	while (1){
 		int x = rand() % 100;
 		sem_wait(&semEmpty);
 		pthread_mutex_lock(&mutexBuffer);
 		
-		buffer[count] = x;
-        std::cout << "Produced: " << x << " at index: " << count << std::endl;
-
-		count++;
-		
 		
 		pthread_mutex_unlock(&mutexBuffer);
 		sem_post(&semFull);
-		sleep(1);
-	}
-}
-
-
-void* consumer(void* args) {
-	// Remove from buffer
-	while (1){
-		int y ;
-		sem_wait(&semFull);
-		pthread_mutex_lock(&mutexBuffer);
-		
-		
-		y = buffer[count - 1];
-        std::cout << "Consumed: " << y << " at index: " << count << std::endl;
-		count--;
-		
-		// consume
-		pthread_mutex_unlock(&mutexBuffer);
-		sem_post(&semEmpty);
-
 	}
 }
 
@@ -63,14 +47,14 @@ int main(int argv, char* argc[]){
 	sem_init(&semFull, 0, 0); // intialize semFull, with 0, as there are 0 full slots
 
 	int i;
+	int shmid;
+	shmid = shmget(KEY, sizeof(bufferSegment), IPC_CREAT | 0775); // ?
+
+
 
 	for (i = 0; i < THREAD_NUM; ++i ) {
 		if (i % 2 == 0) {
 			if (pthread_create(&th[i], NULL, &producer, NULL) != 0) { // Makes sure producer thread is created correctly
-				perror("Failed to create thread");
-			}
-		} else {
-			if (pthread_create(&th[i], NULL, &consumer, NULL) != 0) { // Makes sure consumer thread is created correctly
 				perror("Failed to create thread");
 			}
 		}
@@ -80,6 +64,9 @@ int main(int argv, char* argc[]){
 			perror("Failed to join thread");
 		}
 	}
+	
+
+
 	pthread_mutex_init(&mutexBuffer, NULL);
 	sem_destroy(&semEmpty);
 	sem_destroy(&semFull);

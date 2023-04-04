@@ -11,3 +11,9 @@ Running the program: ./producer-consumer
 Output: ./producer-consumer
 raw output from console is in output.log
 
+Originally, I put both functions in one file, and did not read the instructions clearly enough. Recently, I found out that
+there needs to be two, with shared memory space, which I attempted. 
+
+You can see my progress through producer.cpp and consumer.cpp, although producer-consumer.cpp works as intended, just without a shared memory between two different files. 
+There is, however shared memory between the processes in one file.
+
