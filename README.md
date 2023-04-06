@@ -4,9 +4,11 @@ When the consumer is ready, it takes an item out of the buffer, and consumes it.
 This process works even if the producer is faster than the consumer, and 
 if the consumer is faster than the producer.
 
-Compiling the program: clang++ -pthread producer-consumer.cpp -o producer-consumer
+Compiling the program: 
+clang++ -pthread producer.cpp -o producer
+clang++ -pthread consumer.cpp -o consumer
 
-Running the program: ./producer-consumer
+Running the program: ./producer & ./consumer &
 
 Output: ![Screenshot 2023-04-06 173021](https://user-images.githubusercontent.com/15059428/230498063-88e8f3f9-26be-4710-a0d7-adc1c3938671.png)
 
