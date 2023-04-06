@@ -8,7 +8,8 @@ Compiling the program: clang++ -pthread producer-consumer.cpp -o producer-consum
 
 Running the program: ./producer-consumer
 
-Output: 
+Output: ![Screenshot 2023-04-06 173021](https://user-images.githubusercontent.com/15059428/230498063-88e8f3f9-26be-4710-a0d7-adc1c3938671.png)
+
 
 
 Originally, I put both functions in one file, and did not read the instructions clearly enough. Recently, I found out that
