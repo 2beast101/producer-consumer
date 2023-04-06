@@ -8,8 +8,8 @@ Compiling the program: clang++ -pthread producer-consumer.cpp -o producer-consum
 
 Running the program: ./producer-consumer
 
-Output: ./producer-consumer
-raw output from console is in output.log
+Output: 
+
 
 Originally, I put both functions in one file, and did not read the instructions clearly enough. Recently, I found out that
 there needs to be two, with shared memory space, which I attempted. 
